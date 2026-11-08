@@ -1,465 +1,238 @@
 <!DOCTYPE html>
-<html lang="es" class="scroll-smooth">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Invitación de Graduación - Generación 2026</title>
-    
-    <!-- Fuentes Premium: Playfair Display para títulos (elegancia), Montserrat para cuerpo (modernidad y legibilidad) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
-    
-    <!-- Phosphor Icons para iconografía elegante -->
-    <script src="https://unpkg.com/@phosphor-icons/web"></script>
-
-    <!-- Tailwind CSS -->
+    <title>Invitación de Graduación | Ricardo Flores Magón</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        navy: {
-                            DEFAULT: '#0a1128',
-                            light: '#131f42',
-                            dark: '#040814'
-                        },
-                        gold: {
-                            DEFAULT: '#D4AF37',
-                            light: '#FDF1CB',
-                            dark: '#996515',
-                            accent: '#C59B27'
-                        }
-                    },
-                    fontFamily: {
-                        serif: ['"Playfair Display"', 'serif'],
-                        sans: ['Montserrat', 'sans-serif'],
-                    },
-                    backgroundImage: {
-                        'gold-gradient': 'linear-gradient(to right, #C59B27, #FDF1CB, #D4AF37, #FDF1CB, #996515)',
-                        'gold-gradient-vertical': 'linear-gradient(to bottom, #C59B27, #FDF1CB, #D4AF37)',
-                        'radial-glow': 'radial-gradient(circle at center, rgba(212,175,55,0.15) 0%, rgba(10,17,40,0) 70%)'
-                    }
-                }
-            }
-        }
-    </script>
-
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
     <style>
         body {
-            background-color: #0a1128;
-            color: #f8fafc;
+            background-color: #0B132B; /* Azul Medianoche */
+            color: #F8F9FA;
+            font-family: 'Montserrat', sans-serif;
             overflow-x: hidden;
         }
-
-        /* Texto con gradiente dorado */
-        .text-gold-gradient {
-            background: linear-gradient(to right, #C59B27, #FDF1CB, #D4AF37, #FDF1CB, #996515);
+        h1, h2, h3, .serif {
+            font-family: 'Playfair Display', serif;
+        }
+        .gold-text {
+            background: linear-gradient(to right, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
             -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
             background-clip: text;
+            color: transparent;
         }
-
-        /* Animaciones Scroll Reveal */
-        .fade-up {
-            opacity: 0;
-            transform: translateY(40px);
-            transition: opacity 1s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        .gold-border {
+            border: 2px solid #D4AF37;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
         }
-        
-        .fade-up.visible {
-            opacity: 1;
-            transform: translateY(0);
+        .gold-bg {
+            background: linear-gradient(to right, #BF953F, #FCF6BA, #B38728);
+            color: #0B132B;
         }
-
-        /* Separador elegante */
-        .divider {
-            height: 1px;
-            background: linear-gradient(to right, transparent, rgba(212,175,55,0.8), transparent);
-            margin: 2rem auto;
-            width: 60%;
-            max-width: 300px;
+        /* Estilos de la línea de tiempo (Programa) */
+        .timeline-container {
+            position: relative;
         }
-
-        .divider-diamond {
-            width: 8px;
-            height: 8px;
-            background-color: #D4AF37;
-            transform: rotate(45deg);
+        .timeline-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 2px;
+            background: #D4AF37;
+            transform: translateX(-50%);
+        }
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2rem;
+        }
+        .timeline-dot {
+            width: 16px;
+            height: 16px;
+            background: #D4AF37;
+            border-radius: 50%;
             position: absolute;
             left: 50%;
-            top: -4px;
-            margin-left: -4px;
-            box-shadow: 0 0 10px rgba(212,175,55,0.8);
+            top: 0;
+            transform: translateX(-50%);
+            box-shadow: 0 0 10px #D4AF37;
         }
-
-        /* Confetti Styles */
-        .confetti-container {
-            position: absolute;
+        /* Lluvia de Confeti */
+        #confetti {
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            overflow: hidden;
             pointer-events: none;
-            z-index: 1;
-        }
-
-        .confetti {
-            position: absolute;
-            width: 8px;
-            height: 16px;
-            background-color: #D4AF37;
-            opacity: 0.7;
-            animation: fall linear infinite, sway ease-in-out infinite alternate;
-        }
-
-        @keyframes fall {
-            0% { top: -10%; transform: rotateZ(0deg) rotateX(0deg); }
-            100% { top: 110%; transform: rotateZ(360deg) rotateX(360deg); }
-        }
-
-        @keyframes sway {
-            0% { margin-left: -15px; }
-            100% { margin-left: 15px; }
-        }
-
-        /* Iframe contenedor responsivo */
-        .map-container {
-            position: relative;
-            padding-bottom: 56.25%; /* 16:9 aspect ratio */
-            height: 0;
-            overflow: hidden;
-            border-radius: 0.75rem;
-            box-shadow: 0 0 30px rgba(212,175,55,0.15);
-            border: 1px solid rgba(212,175,55,0.3);
-        }
-        .map-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            z-index: 100;
         }
     </style>
 </head>
-<body class="font-sans antialiased selection:bg-gold selection:text-navy-dark">
+<body class="antialiased">
 
-    <!-- HERO SECTION (Pantalla Principal) -->
-    <header class="relative min-h-[100svh] flex flex-col items-center justify-center text-center px-6 py-20 overflow-hidden bg-radial-glow">
-        <!-- Contenedor del confeti (generado por JS) -->
-        <div id="confetti-wrapper" class="confetti-container"></div>
+    <!-- Animación de fondo -->
+    <canvas id="confetti"></canvas>
+
+    <!-- Portada Principal -->
+    <header class="min-h-screen flex flex-col items-center justify-center text-center p-6 relative">
+        <!-- Fondo con opacidad -->
+        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80')] bg-cover bg-center opacity-10"></div>
         
-        <!-- Elementos gráficos de fondo -->
-        <div class="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-10 pointer-events-none"></div>
-
-        <div class="z-10 fade-up">
-            <!-- Icono de Birrete Elegante (Vector) -->
-            <div class="relative w-32 h-32 mx-auto mb-10 drop-shadow-[0_0_15px_rgba(212,175,55,0.4)]">
-                <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full text-gold">
-                    <path d="M50 15L10 35L50 55L90 35L50 15Z" fill="currentColor" fill-opacity="0.2" stroke="url(#goldGrad)" stroke-width="2" stroke-linejoin="round"/>
-                    <path d="M22 41V65C22 75 35 82 50 82C65 82 78 75 78 65V41" stroke="url(#goldGrad)" stroke-width="2" stroke-linecap="round"/>
-                    <path d="M90 35V65" stroke="url(#goldGrad)" stroke-width="2" stroke-linecap="round"/>
-                    <circle cx="90" cy="70" r="4" fill="currentColor"/>
-                    <path d="M90 74L87 90H93L90 74Z" fill="currentColor"/>
-                    <!-- Borla -->
-                    <circle cx="50" cy="35" r="3" fill="#FDF1CB"/>
-                    <defs>
-                        <linearGradient id="goldGrad" x1="10" y1="15" x2="90" y2="82" gradientUnits="userSpaceOnUse">
-                            <stop stop-color="#C59B27"/>
-                            <stop offset="0.5" stop-color="#FDF1CB"/>
-                            <stop offset="1" stop-color="#996515"/>
-                        </linearGradient>
-                    </defs>
-                </svg>
-            </div>
-
-            <p class="text-gold tracking-[0.3em] uppercase text-sm md:text-base font-medium mb-4">Generación 2026</p>
-            <h1 class="font-serif text-6xl md:text-7xl lg:text-8xl font-bold mb-6 text-gold-gradient leading-[1.1] drop-shadow-lg">
-                Feliz <br/><span class="italic font-normal text-white drop-shadow-md">Graduación</span>
-            </h1>
+        <div class="relative z-10 max-w-3xl gold-border p-8 md:p-12 rounded-lg bg-[#0B132B] bg-opacity-80 backdrop-blur-sm">
+            <h2 class="text-xl md:text-2xl tracking-widest uppercase mb-4 text-[#D4AF37]">Escuela Primaria</h2>
+            <h1 class="text-4xl md:text-6xl font-bold mb-2 gold-text">Ricardo Flores Magón</h1>
+            <div class="w-24 h-1 bg-[#D4AF37] mx-auto my-6 rounded"></div>
             
-            <div class="relative">
-                <div class="divider"></div>
-                <div class="divider-diamond"></div>
-            </div>
-            
-            <p class="font-serif italic text-xl md:text-2xl max-w-2xl mx-auto text-gray-300 leading-relaxed px-4 mt-6">
-                "El éxito es la suma de pequeños esfuerzos repetidos día tras día."
+            <p class="text-lg md:text-xl font-light mb-6 italic">
+                "Hoy cierro un capítulo lleno de juegos y aprendizajes, y comienzo otro lleno de nuevas aventuras."
             </p>
-
-            <a href="#detalles" class="mt-14 inline-flex items-center gap-3 px-10 py-4 rounded-full border border-gold text-gold font-medium uppercase tracking-wider text-sm hover:bg-gold hover:text-navy-dark transition-all duration-500 hover:shadow-[0_0_20px_rgba(212,175,55,0.4)]">
-                Descubrir Detalles <i class="ph ph-caret-down text-lg animate-bounce"></i>
-            </a>
+            
+            <h3 class="text-2xl md:text-3xl italic text-[#D4AF37] mb-8">Generación 2021 - 2027</h3>
+            
+            <div class="flex flex-col md:flex-row items-center justify-center gap-6 mt-8">
+                <div class="text-center">
+                    <p class="text-sm uppercase tracking-wider text-gray-400">Fecha</p>
+                    <p class="text-2xl gold-text font-bold serif">09 de Julio, 2027</p>
+                </div>
+                <div class="hidden md:block w-px h-12 bg-[#D4AF37]"></div>
+                <div class="text-center">
+                    <p class="text-sm uppercase tracking-wider text-gray-400">Hora</p>
+                    <p class="text-2xl gold-text font-bold serif">09:45 AM</p>
+                </div>
+            </div>
         </div>
     </header>
 
-    <!-- SECCIÓN DE MENSAJE -->
-    <section class="py-24 px-6 relative border-y border-gold/10 bg-navy-light/40 backdrop-blur-md">
-        <div class="max-w-3xl mx-auto text-center fade-up">
-            <h3 class="font-serif text-3xl md:text-4xl text-gold mb-8">Una Invitación Especial</h3>
-            <p class="text-lg md:text-xl text-gray-300 font-light leading-relaxed">
-                La Dirección, el personal docente y administrativo del <span class="font-medium text-white">Colegio Esparza</span>, se enorgullecen en invitarle a celebrar la culminación de los estudios de nuestra apreciada Generación 2026. Su presencia es el mayor honor en esta ceremonia que marca el inicio de un brillante futuro.
-            </p>
+    <!-- Mapa y Ubicación -->
+    <section class="py-20 px-6 bg-[#060A17]">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-3xl md:text-5xl mb-12 gold-text">Lugar del Evento</h2>
+            
+            <div class="gold-border rounded-lg overflow-hidden mb-8 relative pb-[56.25%] h-0">
+                <iframe 
+                    src="https://www.google.com/maps?q=Auditorio+Colegio+Esparza+Puebla&output=embed" 
+                    class="absolute top-0 left-0 w-full h-full border-0" 
+                    allowfullscreen="" 
+                    loading="lazy">
+                </iframe>
+            </div>
+            
+            <h3 class="text-2xl serif mb-2 text-[#D4AF37]">Auditorio del Colegio Esparza</h3>
+            <p class="text-gray-300 mb-8 font-light">Puebla, Pue., México</p>
+            
+            <a href="https://www.google.com/maps/search/Auditorio+Colegio+Esparza+Puebla" target="_blank" class="gold-bg px-8 py-3 rounded-full font-bold uppercase tracking-wider hover:opacity-90 transition shadow-lg inline-block">
+                📍 Abrir en Google Maps
+            </a>
         </div>
     </section>
 
-    <!-- SECCIÓN DE FECHA Y LUGAR -->
-    <section id="detalles" class="py-24 px-6 bg-navy relative">
-        <div class="max-w-6xl mx-auto">
-            <div class="text-center mb-16 fade-up">
-                <h2 class="font-serif text-4xl md:text-5xl text-gold-gradient mb-4">Cuándo y Dónde</h2>
-                <p class="text-gray-400 font-light tracking-wide">Acompáñanos a celebrar este gran logro.</p>
-            </div>
+    <!-- Programa de Actividades -->
+    <section class="py-20 px-6">
+        <div class="max-w-3xl mx-auto">
+            <h2 class="text-3xl md:text-5xl text-center mb-16 gold-text">Programa del Evento</h2>
             
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+            <div class="timeline-container">
+                <div class="timeline-item flex flex-col md:flex-row items-center w-full">
+                    <div class="timeline-dot md:hidden"></div>
+                    <div class="md:w-1/2 md:pr-12 text-center md:text-right mb-4 md:mb-0">
+                        <h3 class="text-xl gold-text font-bold serif">09:45 AM</h3>
+                    </div>
+                    <div class="hidden md:block timeline-dot"></div>
+                    <div class="md:w-1/2 md:pl-12 text-center md:text-left">
+                        <p class="text-lg">Recepción de Invitados</p>
+                    </div>
+                </div>
                 
-                <!-- Tarjeta de Fecha y Hora -->
-                <div class="lg:col-span-4 flex flex-col gap-6 fade-up">
-                    <div class="bg-navy-light/60 p-10 rounded-2xl border border-gold/20 flex-1 flex flex-col justify-center items-center text-center relative overflow-hidden group hover:border-gold/50 transition-colors duration-500">
-                        <div class="absolute top-0 right-0 w-32 h-32 bg-gold/5 rounded-bl-full pointer-events-none"></div>
-                        
-                        <i class="ph-light ph-calendar-star text-5xl text-gold mb-6 group-hover:scale-110 transition-transform duration-500"></i>
-                        <h3 class="font-sans font-semibold uppercase tracking-widest text-sm text-gray-400 mb-2">Día del Evento</h3>
-                        <p class="font-serif text-4xl text-white mb-8">9 de Julio</p>
-                        
-                        <div class="w-16 h-[1px] bg-gold/30 mx-auto mb-8"></div>
-                        
-                        <i class="ph-light ph-clock text-5xl text-gold mb-6 group-hover:scale-110 transition-transform duration-500"></i>
-                        <h3 class="font-sans font-semibold uppercase tracking-widest text-sm text-gray-400 mb-2">Recepción</h3>
-                        <p class="font-serif text-3xl text-white">09:00 AM</p>
+                <div class="timeline-item flex flex-col md:flex-row items-center w-full">
+                    <div class="timeline-dot md:hidden"></div>
+                    <div class="md:w-1/2 md:pr-12 text-center md:text-right mb-4 md:mb-0">
+                        <p class="text-lg">Programa Cívico</p>
+                    </div>
+                    <div class="hidden md:block timeline-dot"></div>
+                    <div class="md:w-1/2 md:pl-12 text-center md:text-left">
+                        <h3 class="text-xl gold-text font-bold serif">10:00 AM</h3>
                     </div>
                 </div>
-
-                <!-- Tarjeta de Ubicación y Mapa Interactivo -->
-                <div class="lg:col-span-8 bg-navy-light/60 p-6 md:p-10 rounded-2xl border border-gold/20 flex flex-col relative fade-up" style="transition-delay: 200ms;">
-                    <div class="flex flex-col md:flex-row items-center md:items-start gap-6 mb-8 text-center md:text-left">
-                        <div class="w-16 h-16 bg-navy border border-gold/30 rounded-full flex items-center justify-center shrink-0">
-                            <i class="ph-fill ph-map-pin text-3xl text-gold"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-sans font-semibold uppercase tracking-widest text-sm text-gray-400 mb-1">Ubicación</h3>
-                            <p class="font-serif text-3xl md:text-4xl text-white text-gold-gradient mb-2">Auditorio del Colegio Esparza</p>
-                            <p class="text-gray-300 font-light text-lg">Puebla, Pue.</p>
-                        </div>
+                
+                <div class="timeline-item flex flex-col md:flex-row items-center w-full">
+                    <div class="timeline-dot md:hidden"></div>
+                    <div class="md:w-1/2 md:pr-12 text-center md:text-right mb-4 md:mb-0">
+                        <h3 class="text-xl gold-text font-bold serif">10:45 AM</h3>
                     </div>
-
-                    <!-- Iframe de Google Maps -->
-                    <div class="map-container mb-8 z-10 relative">
-                        <iframe 
-                            src="https://maps.google.com/maps?q=Colegio%20Esparza,%20Puebla&t=&z=15&ie=UTF8&iwloc=&output=embed" 
-                            frameborder="0" 
-                            scrolling="no" 
-                            marginheight="0" 
-                            marginwidth="0"
-                            title="Mapa del Colegio Esparza">
-                        </iframe>
-                    </div>
-
-                    <!-- Botón Funcional de Google Maps -->
-                    <div class="text-center md:text-right mt-auto">
-                        <a href="https://www.google.com/maps/search/?api=1&query=Colegio+Esparza+Puebla" 
-                           target="_blank" 
-                           rel="noopener noreferrer"
-                           class="inline-flex items-center justify-center gap-2 w-full md:w-auto px-8 py-4 bg-gold text-navy-dark font-bold rounded-xl shadow-[0_4px_15px_rgba(212,175,55,0.4)] hover:bg-gold-light hover:-translate-y-1 transition-all duration-300">
-                            <i class="ph-bold ph-navigation-arrow text-xl"></i>
-                            Abrir en Google Maps
-                        </a>
+                    <div class="hidden md:block timeline-dot"></div>
+                    <div class="md:w-1/2 md:pl-12 text-center md:text-left">
+                        <p class="text-lg">Entrega de Documentos y Programa Social</p>
                     </div>
                 </div>
-
-            </div>
-        </div>
-    </section>
-
-    <!-- SECCIÓN DEL PROGRAMA (TIMELINE ELEGANTE) -->
-    <section class="py-24 px-6 bg-navy-light/30 relative border-t border-gold/10">
-        <div class="max-w-4xl mx-auto">
-            <div class="text-center mb-16 fade-up">
-                <i class="ph-light ph-scroll text-4xl text-gold mb-4"></i>
-                <h2 class="font-serif text-4xl md:text-5xl text-gold-gradient">Programa del Evento</h2>
-                <div class="relative mt-6">
-                    <div class="divider"></div>
-                    <div class="divider-diamond"></div>
-                </div>
-            </div>
-
-            <!-- Timeline -->
-            <div class="relative wrap overflow-hidden p-4 md:py-10 h-full">
-                <!-- Línea central (oculta en móvil muy pequeño, alineada a la izquierda en móvil, centro en desktop) -->
-                <div class="absolute border-opacity-30 border-gold h-full border-l-2 left-6 md:left-1/2 md:-ml-px top-0"></div>
-
-                <!-- Item 1 -->
-                <div class="mb-12 flex justify-between items-center w-full flex-row-reverse md:flex-row fade-up">
-                    <div class="hidden md:block w-5/12"></div>
-                    <div class="z-20 flex items-center flex-col absolute left-2 md:relative md:left-auto">
-                        <div class="w-8 h-8 bg-navy-dark border-2 border-gold rounded-full flex items-center justify-center shadow-[0_0_10px_rgba(212,175,55,0.5)]">
-                            <div class="w-2 h-2 bg-gold rounded-full"></div>
-                        </div>
+                
+                <div class="timeline-item flex flex-col md:flex-row items-center w-full">
+                    <div class="timeline-dot md:hidden"></div>
+                    <div class="md:w-1/2 md:pr-12 text-center md:text-right mb-4 md:mb-0">
+                        <p class="text-lg">Clausura</p>
                     </div>
-                    <div class="w-full md:w-5/12 bg-navy border border-gold/20 rounded-xl p-6 pl-12 md:pl-6 shadow-lg relative ml-12 md:ml-0 md:text-right hover:border-gold/50 transition-colors">
-                        <span class="text-gold font-bold text-sm tracking-widest mb-1 block">09:00 AM</span>
-                        <h4 class="font-serif text-xl text-white mb-2">Recepción de Invitados</h4>
-                        <p class="text-gray-400 font-light text-sm">Llegada de graduados, familiares y autoridades al recinto.</p>
-                    </div>
-                </div>
-
-                <!-- Item 2 -->
-                <div class="mb-12 flex justify-between items-center w-full md:flex-row-reverse fade-up" style="transition-delay: 100ms;">
-                    <div class="hidden md:block w-5/12"></div>
-                    <div class="z-20 flex items-center flex-col absolute left-2 md:relative md:left-auto">
-                        <div class="w-8 h-8 bg-navy-dark border-2 border-gold rounded-full flex items-center justify-center shadow-[0_0_10px_rgba(212,175,55,0.5)]">
-                            <div class="w-2 h-2 bg-gold rounded-full"></div>
-                        </div>
-                    </div>
-                    <div class="w-full md:w-5/12 bg-navy border border-gold/20 rounded-xl p-6 pl-12 md:pl-6 shadow-lg relative ml-12 md:ml-0 md:text-left hover:border-gold/50 transition-colors">
-                        <span class="text-gold font-bold text-sm tracking-widest mb-1 block">09:30 AM</span>
-                        <h4 class="font-serif text-xl text-white mb-2">Acto Cívico</h4>
-                        <p class="text-gray-400 font-light text-sm">Honores a la bandera y cambio de escolta.</p>
-                    </div>
-                </div>
-
-                <!-- Item 3 -->
-                <div class="mb-12 flex justify-between items-center w-full flex-row-reverse md:flex-row fade-up" style="transition-delay: 200ms;">
-                    <div class="hidden md:block w-5/12"></div>
-                    <div class="z-20 flex items-center flex-col absolute left-2 md:relative md:left-auto">
-                        <div class="w-8 h-8 bg-navy-dark border-2 border-gold rounded-full flex items-center justify-center shadow-[0_0_10px_rgba(212,175,55,0.5)]">
-                            <i class="ph-fill ph-student text-gold text-sm"></i>
-                        </div>
-                    </div>
-                    <div class="w-full md:w-5/12 bg-navy border border-gold/20 rounded-xl p-6 pl-12 md:pl-6 shadow-lg relative ml-12 md:ml-0 md:text-right hover:border-gold/50 transition-colors">
-                        <span class="text-gold font-bold text-sm tracking-widest mb-1 block">10:00 AM</span>
-                        <h4 class="font-serif text-xl text-white mb-2">Ceremonia Académica</h4>
-                        <p class="text-gray-400 font-light text-sm">Último pase de lista y entrega solemne de documentos.</p>
-                    </div>
-                </div>
-
-                <!-- Item 4 -->
-                <div class="mb-12 flex justify-between items-center w-full md:flex-row-reverse fade-up" style="transition-delay: 300ms;">
-                    <div class="hidden md:block w-5/12"></div>
-                    <div class="z-20 flex items-center flex-col absolute left-2 md:relative md:left-auto">
-                        <div class="w-8 h-8 bg-navy-dark border-2 border-gold rounded-full flex items-center justify-center shadow-[0_0_10px_rgba(212,175,55,0.5)]">
-                            <i class="ph-fill ph-champagne text-gold text-sm"></i>
-                        </div>
-                    </div>
-                    <div class="w-full md:w-5/12 bg-navy border border-gold/20 rounded-xl p-6 pl-12 md:pl-6 shadow-lg relative ml-12 md:ml-0 md:text-left hover:border-gold/50 transition-colors">
-                        <span class="text-gold font-bold text-sm tracking-widest mb-1 block">11:30 AM</span>
-                        <h4 class="font-serif text-xl text-white mb-2">Mensaje y Despedida</h4>
-                        <p class="text-gray-400 font-light text-sm">Palabras del Padrino de Generación y clausura oficial del evento.</p>
+                    <div class="hidden md:block timeline-dot"></div>
+                    <div class="md:w-1/2 md:pl-12 text-center md:text-left">
+                        <h3 class="text-xl gold-text font-bold serif">12:30 PM</h3>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- INVITADOS DE HONOR -->
-    <section class="py-24 px-6 bg-navy relative overflow-hidden border-t border-gold/10">
-        <!-- Brillos de fondo -->
-        <div class="absolute top-0 right-[-10%] w-96 h-96 bg-gold/5 rounded-full blur-[100px]"></div>
-        
-        <div class="max-w-4xl mx-auto fade-up">
-            <div class="text-center mb-12">
-                <h2 class="font-serif text-3xl md:text-4xl text-white mb-4">Mesa de Honor</h2>
-                <div class="w-20 h-[1px] bg-gold mx-auto"></div>
-            </div>
-
-            <div class="bg-navy-dark/80 border border-gold/30 rounded-2xl p-8 md:p-12 text-center shadow-[0_0_40px_rgba(0,0,0,0.5)]">
-                <ul class="space-y-10">
-                    <li>
-                        <h4 class="font-serif text-2xl text-gold-light">Lic. Gerardo Mejía Ramírez</h4>
-                        <p class="text-gray-400 text-sm tracking-widest mt-2 uppercase font-medium">Padrino de Generación</p>
-                    </li>
-                    <li class="w-1/2 h-[1px] bg-gold/10 mx-auto"></li>
-                    <li>
-                        <h4 class="font-serif text-xl text-white">Profr. Humberto Cruz Hernández</h4>
-                        <p class="text-gray-400 text-xs tracking-widest mt-2 uppercase">Director de Educación</p>
-                    </li>
-                    <li>
-                        <h4 class="font-serif text-xl text-white">Mtro. José Luis Moreno Nájar</h4>
-                        <p class="text-gray-400 text-xs tracking-widest mt-2 uppercase">Director de la Institución</p>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </section>
-
-    <!-- FOOTER -->
-    <footer class="py-16 text-center border-t border-gold/20 bg-navy-dark relative overflow-hidden flex flex-col items-center">
-        <div class="absolute bottom-[-50px] left-1/2 -translate-x-1/2 w-[80%] h-32 bg-gold/10 blur-[80px] rounded-full"></div>
-        
-        <div class="relative z-10 fade-up">
-            <h2 class="font-serif text-5xl md:text-6xl text-gold-gradient mb-6 font-bold">¡Los Esperamos!</h2>
-            <p class="text-gray-400 font-light mb-10 max-w-md mx-auto">Gracias por ser parte fundamental de la historia de nuestros graduados.</p>
-            
-            <div class="w-12 h-12 border border-gold/30 rounded-full flex items-center justify-center mx-auto text-gold/50 mb-4">
-                <i class="ph-fill ph-graduation-cap text-2xl"></i>
-            </div>
-            <p class="text-xs text-gray-500 uppercase tracking-widest">Generación 2026</p>
-        </div>
+    <!-- Pie de Página -->
+    <footer class="py-10 text-center bg-[#060A17] border-t border-[#D4AF37] border-opacity-30">
+        <p class="text-gray-400 font-light text-sm">Escuela Primaria Ricardo Flores Magón • Generación 2021-2027</p>
+        <p class="text-[#D4AF37] mt-2 serif italic">¡Los esperamos!</p>
     </footer>
 
-    <!-- JAVASCRIPT: Animaciones Scroll y Confeti -->
+    <!-- Script para animar el confeti -->
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            
-            /* --- 1. Lógica del Scroll Reveal --- */
-            const fadeElements = document.querySelectorAll('.fade-up');
-            const observerOptions = {
-                root: null,
-                rootMargin: '0px',
-                threshold: 0.15 
-            };
+        const canvas = document.getElementById('confetti');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
 
-            const observerCallback = (entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                        // Descomentar la siguiente línea si quieres que la animación ocurra solo una vez
-                        // observer.unobserve(entry.target); 
-                    }
-                });
-            };
+        let particles = [];
+        const particleCount = 80; // Cantidad de confeti
 
-            const observer = new IntersectionObserver(observerCallback, observerOptions);
-            fadeElements.forEach(el => observer.observe(el));
+        for (let i = 0; i < particleCount; i++) {
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height - canvas.height,
+                r: Math.random() * 4 + 2,
+                dx: Math.random() * 2 - 1,
+                dy: Math.random() * 2 + 1,
+                color: ['#D4AF37', '#FFDF73', '#AA771C'][Math.floor(Math.random() * 3)]
+            });
+        }
 
-
-            /* --- 2. Generador de Confeti Dorado --- */
-            const confettiContainer = document.getElementById('confetti-wrapper');
-            const colors = ['#D4AF37', '#FDF1CB', '#996515', '#C59B27']; // Tonos dorados
-            const confettiCount = 50; // Cantidad de confetis en pantalla
-
-            for (let i = 0; i < confettiCount; i++) {
-                createConfetti();
-            }
-
-            function createConfetti() {
-                const confetti = document.createElement('div');
-                confetti.classList.add('confetti');
+        function drawConfetti() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                ctx.fillStyle = p.color;
+                ctx.fill();
+                p.y += p.dy;
+                p.x += p.dx;
                 
-                // Propiedades aleatorias
-                const color = colors[Math.floor(Math.random() * colors.length)];
-                const left = Math.random() * 100 + 'vw';
-                const animDuration = Math.random() * 3 + 3 + 's'; // caida entre 3 y 6 segs
-                const animDelay = Math.random() * 5 + 's';
-                const size = Math.random() * 0.5 + 0.5; // Escala entre 0.5 y 1
-                
-                confetti.style.backgroundColor = color;
-                confetti.style.left = left;
-                confetti.style.animationDuration = animDuration + ', ' + (Math.random()*2 + 1) + 's'; // caida, sway
-                confetti.style.animationDelay = animDelay + ', ' + animDelay;
-                confetti.style.transform = `scale(${size})`;
-
-                // Diferentes formas (algunos cuadrados, otros rectangulos)
-                if(Math.random() > 0.5) {
-                    confetti.style.width = '10px';
-                    confetti.style.height = '10px';
-                    if(Math.random() > 0.5) confetti.style.borderRadius = '50%'; // Algunos circulares
+                // Reiniciar en la parte superior cuando cae al fondo
+                if (p.y > canvas.height) {
+                    p.y = -10;
+                    p.x = Math.random() * canvas.width;
                 }
+            });
+            requestAnimationFrame(drawConfetti);
+        }
+        drawConfetti();
 
-                confettiContainer.appendChild(confetti);
-            }
+        // Ajustar el canvas si se gira la pantalla del celular
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
         });
     </script>
 </body>
