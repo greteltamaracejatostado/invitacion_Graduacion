@@ -123,7 +123,7 @@
             .timeline-item:nth-child(even) .right-content { order: 1; text-align: right; padding-left: 0; padding-right: 3rem; }
         }
 
-        /* Partículas de fondo (reemplazo más ligero al confeti canvas) */
+        /* Partículas de fondo */
         .bg-particles {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background-image: radial-gradient(rgba(212, 175, 55, 0.15) 1px, transparent 1px);
@@ -136,8 +136,8 @@
 
     <div class="bg-particles"></div>
 
-    <!-- LOGO DE LA ESCUELA -->
-    <img src="LOGO.JPG" alt="Logo" class="absolute top-6 left-6 md:top-8 md:left-8 w-20 h-20 md:w-24 md:h-24 object-contain rounded-full border-2 border-[#D4AF37] shadow-[0_0_15px_rgba(212,175,55,0.5)] z-50 floating bg-white">
+    <!-- LOGO DE LA ESCUELA (Ruta corregida a LOGO.jpg) -->
+    <img src="LOGO.jpg" alt="Logo" class="absolute top-6 left-6 md:top-8 md:left-8 w-20 h-20 md:w-24 md:h-24 object-contain rounded-full border-2 border-[#D4AF37] shadow-[0_0_15px_rgba(212,175,55,0.5)] z-50 floating bg-white">
 
     <!-- PORTADA -->
     <header class="min-h-screen flex flex-col items-center justify-center text-center p-6 relative z-10">
@@ -178,25 +178,25 @@
                     <div class="w-16 h-16 md:w-24 md:h-24 bg-[#070B19] rounded-lg flex items-center justify-center shadow-xl">
                         <span id="days" class="text-3xl md:text-5xl font-bold text-[#D4AF37] serif">00</span>
                     </div>
-                    <span class="text-xs md:text-sm font-semibold mt-2 uppercase">Días</span>
+                    <span class="text-xs md:text-sm font-semibold mt-2 uppercase text-[#070B19]">Días</span>
                 </div>
                 <div class="flex flex-col items-center">
                     <div class="w-16 h-16 md:w-24 md:h-24 bg-[#070B19] rounded-lg flex items-center justify-center shadow-xl">
                         <span id="hours" class="text-3xl md:text-5xl font-bold text-[#D4AF37] serif">00</span>
                     </div>
-                    <span class="text-xs md:text-sm font-semibold mt-2 uppercase">Horas</span>
+                    <span class="text-xs md:text-sm font-semibold mt-2 uppercase text-[#070B19]">Horas</span>
                 </div>
                 <div class="flex flex-col items-center">
                     <div class="w-16 h-16 md:w-24 md:h-24 bg-[#070B19] rounded-lg flex items-center justify-center shadow-xl">
                         <span id="minutes" class="text-3xl md:text-5xl font-bold text-[#D4AF37] serif">00</span>
                     </div>
-                    <span class="text-xs md:text-sm font-semibold mt-2 uppercase">Minutos</span>
+                    <span class="text-xs md:text-sm font-semibold mt-2 uppercase text-[#070B19]">Minutos</span>
                 </div>
                 <div class="flex flex-col items-center">
                     <div class="w-16 h-16 md:w-24 md:h-24 bg-[#070B19] rounded-lg flex items-center justify-center shadow-xl">
                         <span id="seconds" class="text-3xl md:text-5xl font-bold text-[#D4AF37] serif">00</span>
                     </div>
-                    <span class="text-xs md:text-sm font-semibold mt-2 uppercase">Segundos</span>
+                    <span class="text-xs md:text-sm font-semibold mt-2 uppercase text-[#070B19]">Segundos</span>
                 </div>
             </div>
         </div>
@@ -230,7 +230,7 @@
         </div>
     </section>
 
-    <!-- PROGRAMA DEL EVENTO (Corregido para celular) -->
+    <!-- PROGRAMA DEL EVENTO -->
     <section class="py-20 px-6 relative z-10">
         <div class="max-w-4xl mx-auto">
             <h2 class="cursive text-5xl md:text-6xl text-center mb-16 gold-text drop-shadow-md reveal">Programa</h2>
