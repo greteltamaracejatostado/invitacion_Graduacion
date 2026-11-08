@@ -3,237 +3,351 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Invitación de Graduación | Ricardo Flores Magón</title>
+    <title>Invitación Graduación | Ricardo Flores Magón</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Great+Vibes&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --navy-dark: #070B19;
+            --navy-light: #111A30;
+            --gold-light: #FBF5B7;
+            --gold-main: #D4AF37;
+            --gold-dark: #AA771C;
+        }
         body {
-            background-color: #0B132B; /* Azul Medianoche */
+            background-color: var(--navy-dark);
             color: #F8F9FA;
             font-family: 'Montserrat', sans-serif;
             overflow-x: hidden;
+            margin: 0;
         }
-        h1, h2, h3, .serif {
-            font-family: 'Playfair Display', serif;
-        }
+        h1, h2, h3, .serif { font-family: 'Playfair Display', serif; }
+        .cursive { font-family: 'Great Vibes', cursive; }
+        
         .gold-text {
             background: linear-gradient(to right, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
         }
-        .gold-border {
-            border: 2px solid #D4AF37;
-            box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
-        }
+        
         .gold-bg {
-            background: linear-gradient(to right, #BF953F, #FCF6BA, #B38728);
-            color: #0B132B;
+            background: linear-gradient(135deg, #BF953F, #FCF6BA, #B38728);
+            color: var(--navy-dark);
         }
-        /* Estilos de la línea de tiempo (Programa) */
-        .timeline-container {
-            position: relative;
+
+        /* --- EFECTOS Y ANIMACIONES --- */
+        .glass-card {
+            background: rgba(17, 26, 48, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
+
+        .floating {
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* Animaciones al hacer Scroll (Intersect Observer) */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .reveal-zoom {
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+        .reveal-zoom.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* --- CORRECCIÓN TIMELINE PARA CELULARES --- */
+        .timeline-container { position: relative; }
+        
+        /* Línea central en PC, línea a la izquierda en celular */
         .timeline-container::before {
             content: '';
             position: absolute;
-            top: 0;
-            bottom: 0;
-            left: 50%;
+            top: 0; bottom: 0;
             width: 2px;
-            background: #D4AF37;
+            background: linear-gradient(to bottom, transparent, var(--gold-main), transparent);
+            left: 20px; /* Celular */
             transform: translateX(-50%);
         }
-        .timeline-item {
-            position: relative;
-            margin-bottom: 2rem;
+        
+        .timeline-item { 
+            position: relative; 
+            margin-bottom: 3rem; 
+            display: flex;
+            flex-direction: column;
+            padding-left: 50px; /* Celular: espacio para que no choque con la línea */
+            text-align: left;
         }
+
         .timeline-dot {
-            width: 16px;
-            height: 16px;
-            background: #D4AF37;
+            width: 14px; height: 14px;
+            background: var(--gold-light);
+            border: 3px solid var(--navy-dark);
             border-radius: 50%;
             position: absolute;
-            left: 50%;
-            top: 0;
+            top: 5px;
+            left: 20px; /* Celular */
             transform: translateX(-50%);
-            box-shadow: 0 0 10px #D4AF37;
+            box-shadow: 0 0 10px var(--gold-main);
+            z-index: 2;
         }
-        /* Lluvia de Confeti */
-        #confetti {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 100;
+
+        /* PC (Pantallas medianas y grandes) */
+        @media (min-width: 768px) {
+            .timeline-container::before { left: 50%; }
+            .timeline-item { flex-direction: row; padding-left: 0; text-align: center; }
+            .timeline-item .left-content { width: 50%; padding-right: 3rem; text-align: right; }
+            .timeline-item .right-content { width: 50%; padding-left: 3rem; text-align: left; }
+            .timeline-dot { left: 50%; top: 50%; transform: translate(-50%, -50%); }
+            
+            /* Ajustes para alternar contenido en PC */
+            .timeline-item:nth-child(even) .left-content { order: 2; text-align: left; padding-right: 0; padding-left: 3rem; }
+            .timeline-item:nth-child(even) .right-content { order: 1; text-align: right; padding-left: 0; padding-right: 3rem; }
+        }
+
+        /* Partículas de fondo (reemplazo más ligero al confeti canvas) */
+        .bg-particles {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: radial-gradient(rgba(212, 175, 55, 0.15) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: 0; pointer-events: none;
         }
     </style>
 </head>
-<body class="antialiased">
+<body class="selection:bg-[#D4AF37] selection:text-black">
 
-    <!-- Animación de fondo -->
-    <canvas id="confetti"></canvas>
+    <div class="bg-particles"></div>
 
-    <!-- Portada Principal -->
-    <header class="min-h-screen flex flex-col items-center justify-center text-center p-6 relative">
-        <!-- Fondo con opacidad -->
-        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80')] bg-cover bg-center opacity-10"></div>
-        
-        <div class="relative z-10 max-w-3xl gold-border p-8 md:p-12 rounded-lg bg-[#0B132B] bg-opacity-80 backdrop-blur-sm">
-            <h2 class="text-xl md:text-2xl tracking-widest uppercase mb-4 text-[#D4AF37]">Escuela Primaria</h2>
-            <h1 class="text-4xl md:text-6xl font-bold mb-2 gold-text">Ricardo Flores Magón</h1>
-            <div class="w-24 h-1 bg-[#D4AF37] mx-auto my-6 rounded"></div>
+    <!-- LOGO DE LA ESCUELA -->
+    <img src="LOGO.JPG" alt="Logo" class="absolute top-6 left-6 md:top-8 md:left-8 w-20 h-20 md:w-24 md:h-24 object-contain rounded-full border-2 border-[#D4AF37] shadow-[0_0_15px_rgba(212,175,55,0.5)] z-50 floating bg-white">
+
+    <!-- PORTADA -->
+    <header class="min-h-screen flex flex-col items-center justify-center text-center p-6 relative z-10">
+        <div class="w-full max-w-md md:max-w-2xl mt-12 reveal active">
+            <!-- Icono Birrete -->
+            <svg class="w-16 h-16 mx-auto mb-4 text-[#D4AF37]" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 3L1 9L12 15L21 10.09V17H23V9M5 13.18V17.18L12 21L19 17.18V13.18L12 17L5 13.18Z"/>
+            </svg>
             
-            <p class="text-lg md:text-xl font-light mb-6 italic">
-                "Hoy cierro un capítulo lleno de juegos y aprendizajes, y comienzo otro lleno de nuevas aventuras."
-            </p>
+            <h2 class="cursive text-6xl md:text-8xl text-[#D4AF37] mb-2 drop-shadow-lg">Clase 2027</h2>
+            <h3 class="text-sm md:text-lg tracking-[0.3em] uppercase mb-8 text-gray-300">Generación 2021 - 2027</h3>
             
-            <h3 class="text-2xl md:text-3xl italic text-[#D4AF37] mb-8">Generación 2021 - 2027</h3>
-            
-            <div class="flex flex-col md:flex-row items-center justify-center gap-6 mt-8">
-                <div class="text-center">
-                    <p class="text-sm uppercase tracking-wider text-gray-400">Fecha</p>
-                    <p class="text-2xl gold-text font-bold serif">09 de Julio, 2027</p>
-                </div>
-                <div class="hidden md:block w-px h-12 bg-[#D4AF37]"></div>
-                <div class="text-center">
-                    <p class="text-sm uppercase tracking-wider text-gray-400">Hora</p>
-                    <p class="text-2xl gold-text font-bold serif">09:45 AM</p>
+            <div class="glass-card p-8 rounded-2xl reveal-zoom active relative overflow-hidden">
+                <div class="absolute -top-10 -right-10 w-32 h-32 bg-[#D4AF37] blur-[70px] opacity-20 rounded-full"></div>
+                
+                <p class="text-xs md:text-sm uppercase tracking-widest text-[#D4AF37] mb-2">Escuela Primaria</p>
+                <h1 class="text-3xl md:text-4xl font-bold mb-6 gold-text leading-tight">Ricardo Flores Magón</h1>
+                
+                <p class="font-light mb-8 italic text-gray-300">
+                    "Tenemos el gran honor de invitarte a celebrar nuestra fiesta de graduación."
+                </p>
+
+                <div class="border-t border-b border-[#D4AF37] border-opacity-30 py-4 mb-2">
+                    <p class="text-xs uppercase tracking-[0.2em] text-gray-400">Día del Evento</p>
+                    <p class="text-2xl md:text-3xl gold-text font-bold serif mt-1">SÁBADO 09.07.27</p>
                 </div>
             </div>
         </div>
     </header>
 
-    <!-- Mapa y Ubicación -->
-    <section class="py-20 px-6 bg-[#060A17]">
-        <div class="max-w-4xl mx-auto text-center">
-            <h2 class="text-3xl md:text-5xl mb-12 gold-text">Lugar del Evento</h2>
+    <!-- CUENTA REGRESIVA -->
+    <section class="py-16 px-6 relative z-10 gold-bg text-center">
+        <div class="max-w-3xl mx-auto reveal">
+            <h2 class="cursive text-4xl md:text-5xl mb-8 text-[#070B19]">¡El gran día se acerca!</h2>
             
-            <div class="gold-border rounded-lg overflow-hidden mb-8 relative pb-[56.25%] h-0">
+            <div class="flex justify-center gap-3 md:gap-6">
+                <div class="flex flex-col items-center">
+                    <div class="w-16 h-16 md:w-24 md:h-24 bg-[#070B19] rounded-lg flex items-center justify-center shadow-xl">
+                        <span id="days" class="text-3xl md:text-5xl font-bold text-[#D4AF37] serif">00</span>
+                    </div>
+                    <span class="text-xs md:text-sm font-semibold mt-2 uppercase">Días</span>
+                </div>
+                <div class="flex flex-col items-center">
+                    <div class="w-16 h-16 md:w-24 md:h-24 bg-[#070B19] rounded-lg flex items-center justify-center shadow-xl">
+                        <span id="hours" class="text-3xl md:text-5xl font-bold text-[#D4AF37] serif">00</span>
+                    </div>
+                    <span class="text-xs md:text-sm font-semibold mt-2 uppercase">Horas</span>
+                </div>
+                <div class="flex flex-col items-center">
+                    <div class="w-16 h-16 md:w-24 md:h-24 bg-[#070B19] rounded-lg flex items-center justify-center shadow-xl">
+                        <span id="minutes" class="text-3xl md:text-5xl font-bold text-[#D4AF37] serif">00</span>
+                    </div>
+                    <span class="text-xs md:text-sm font-semibold mt-2 uppercase">Minutos</span>
+                </div>
+                <div class="flex flex-col items-center">
+                    <div class="w-16 h-16 md:w-24 md:h-24 bg-[#070B19] rounded-lg flex items-center justify-center shadow-xl">
+                        <span id="seconds" class="text-3xl md:text-5xl font-bold text-[#D4AF37] serif">00</span>
+                    </div>
+                    <span class="text-xs md:text-sm font-semibold mt-2 uppercase">Segundos</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MAPA Y UBICACIÓN -->
+    <section class="py-20 px-6 relative z-10 bg-[#040812]">
+        <div class="max-w-3xl mx-auto text-center reveal">
+            <!-- Icono de Edificio -->
+            <svg class="w-12 h-12 mx-auto mb-4 text-[#D4AF37]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+            </svg>
+
+            <h3 class="text-sm tracking-widest uppercase text-gray-400 mb-1">Recepción</h3>
+            <h2 class="text-3xl md:text-4xl gold-text serif mb-2">Auditorio Colegio Esparza</h2>
+            <p class="text-lg text-white mb-8">Puebla, Pue. • 09:45 AM</p>
+            
+            <div class="border border-[#D4AF37] rounded-xl overflow-hidden mb-8 relative pb-[60%] md:pb-[45%] h-0 shadow-2xl reveal-zoom">
                 <iframe 
                     src="https://www.google.com/maps?q=Auditorio+Colegio+Esparza+Puebla&output=embed" 
-                    class="absolute top-0 left-0 w-full h-full border-0" 
+                    class="absolute top-0 left-0 w-full h-full border-0 grayscale-[20%]" 
                     allowfullscreen="" 
                     loading="lazy">
                 </iframe>
             </div>
             
-            <h3 class="text-2xl serif mb-2 text-[#D4AF37]">Auditorio del Colegio Esparza</h3>
-            <p class="text-gray-300 mb-8 font-light">Puebla, Pue., México</p>
-            
-            <a href="https://www.google.com/maps/search/Auditorio+Colegio+Esparza+Puebla" target="_blank" class="gold-bg px-8 py-3 rounded-full font-bold uppercase tracking-wider hover:opacity-90 transition shadow-lg inline-block">
-                📍 Abrir en Google Maps
+            <a href="https://www.google.com/maps/search/Auditorio+Colegio+Esparza+Puebla" target="_blank" class="inline-flex items-center gap-2 border-2 border-[#D4AF37] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-black transition-colors px-8 py-3 rounded-full font-bold uppercase tracking-widest text-sm">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" /></svg>
+                Ver Ubicación
             </a>
         </div>
     </section>
 
-    <!-- Programa de Actividades -->
-    <section class="py-20 px-6">
-        <div class="max-w-3xl mx-auto">
-            <h2 class="text-3xl md:text-5xl text-center mb-16 gold-text">Programa del Evento</h2>
+    <!-- PROGRAMA DEL EVENTO (Corregido para celular) -->
+    <section class="py-20 px-6 relative z-10">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="cursive text-5xl md:text-6xl text-center mb-16 gold-text drop-shadow-md reveal">Programa</h2>
             
             <div class="timeline-container">
-                <div class="timeline-item flex flex-col md:flex-row items-center w-full">
-                    <div class="timeline-dot md:hidden"></div>
-                    <div class="md:w-1/2 md:pr-12 text-center md:text-right mb-4 md:mb-0">
-                        <h3 class="text-xl gold-text font-bold serif">09:45 AM</h3>
+                
+                <div class="timeline-item reveal">
+                    <div class="timeline-dot"></div>
+                    <div class="left-content">
+                        <h3 class="text-2xl gold-text font-bold serif">09:45 AM</h3>
                     </div>
-                    <div class="hidden md:block timeline-dot"></div>
-                    <div class="md:w-1/2 md:pl-12 text-center md:text-left">
-                        <p class="text-lg">Recepción de Invitados</p>
+                    <div class="right-content">
+                        <h4 class="text-xl text-white font-medium mb-1">Recepción de Invitados</h4>
+                        <p class="text-gray-400 font-light text-sm">Llegada de familiares y alumnos.</p>
                     </div>
                 </div>
                 
-                <div class="timeline-item flex flex-col md:flex-row items-center w-full">
-                    <div class="timeline-dot md:hidden"></div>
-                    <div class="md:w-1/2 md:pr-12 text-center md:text-right mb-4 md:mb-0">
-                        <p class="text-lg">Programa Cívico</p>
+                <div class="timeline-item reveal">
+                    <div class="timeline-dot"></div>
+                    <div class="left-content">
+                        <h4 class="text-xl text-white font-medium mb-1">Programa Cívico</h4>
+                        <p class="text-gray-400 font-light text-sm">Honores a la bandera y escolta.</p>
                     </div>
-                    <div class="hidden md:block timeline-dot"></div>
-                    <div class="md:w-1/2 md:pl-12 text-center md:text-left">
-                        <h3 class="text-xl gold-text font-bold serif">10:00 AM</h3>
-                    </div>
-                </div>
-                
-                <div class="timeline-item flex flex-col md:flex-row items-center w-full">
-                    <div class="timeline-dot md:hidden"></div>
-                    <div class="md:w-1/2 md:pr-12 text-center md:text-right mb-4 md:mb-0">
-                        <h3 class="text-xl gold-text font-bold serif">10:45 AM</h3>
-                    </div>
-                    <div class="hidden md:block timeline-dot"></div>
-                    <div class="md:w-1/2 md:pl-12 text-center md:text-left">
-                        <p class="text-lg">Entrega de Documentos y Programa Social</p>
+                    <div class="right-content">
+                        <h3 class="text-2xl gold-text font-bold serif">10:00 AM</h3>
                     </div>
                 </div>
                 
-                <div class="timeline-item flex flex-col md:flex-row items-center w-full">
-                    <div class="timeline-dot md:hidden"></div>
-                    <div class="md:w-1/2 md:pr-12 text-center md:text-right mb-4 md:mb-0">
-                        <p class="text-lg">Clausura</p>
+                <div class="timeline-item reveal">
+                    <div class="timeline-dot"></div>
+                    <div class="left-content">
+                        <h3 class="text-2xl gold-text font-bold serif">10:45 AM</h3>
                     </div>
-                    <div class="hidden md:block timeline-dot"></div>
-                    <div class="md:w-1/2 md:pl-12 text-center md:text-left">
-                        <h3 class="text-xl gold-text font-bold serif">12:30 PM</h3>
+                    <div class="right-content">
+                        <h4 class="text-xl text-white font-medium mb-1">Programa Social</h4>
+                        <p class="text-gray-400 font-light text-sm">Entrega de documentos y último pase.</p>
                     </div>
                 </div>
+                
+                <div class="timeline-item reveal">
+                    <div class="timeline-dot"></div>
+                    <div class="left-content">
+                        <h4 class="text-xl text-white font-medium mb-1">Clausura</h4>
+                        <p class="text-gray-400 font-light text-sm">Mensaje de despedida oficial.</p>
+                    </div>
+                    <div class="right-content">
+                        <h3 class="text-2xl gold-text font-bold serif">12:30 PM</h3>
+                    </div>
+                </div>
+
             </div>
         </div>
     </section>
 
-    <!-- Pie de Página -->
-    <footer class="py-10 text-center bg-[#060A17] border-t border-[#D4AF37] border-opacity-30">
-        <p class="text-gray-400 font-light text-sm">Escuela Primaria Ricardo Flores Magón • Generación 2021-2027</p>
-        <p class="text-[#D4AF37] mt-2 serif italic">¡Los esperamos!</p>
+    <!-- DRESS CODE -->
+    <section class="py-16 px-6 relative z-10 bg-[#040812] border-t border-b border-[#D4AF37] border-opacity-10 text-center">
+        <div class="max-w-2xl mx-auto reveal-zoom">
+            <svg class="w-12 h-12 mx-auto mb-4 text-[#D4AF37]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21 10.5h.375c.621 0 1.125.504 1.125 1.125v2.25c0 .621-.504 1.125-1.125 1.125H21M4.5 10.5v10.5a2.25 2.25 0 002.25 2.25h10.5a2.25 2.25 0 002.25-2.25V10.5m-15 0h15m-15 0h-.375c-.621 0-1.125.504-1.125 1.125v2.25c0 .621.504 1.125 1.125 1.125H4.5M10.5 8.25v2.25m3-2.25v2.25m-6.75-2.25h.375c.621 0 1.125-.504 1.125-1.125V5.25C8.25 4.629 8.754 4.125 9.375 4.125h5.25c.621 0 1.125.504 1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125h.375" />
+            </svg>
+            <h3 class="text-sm tracking-widest uppercase text-gray-400 mb-2">Dress Code</h3>
+            <h2 class="text-3xl gold-text serif mb-4">Vestimenta Formal</h2>
+            <p class="text-gray-400 font-light">Para hacer de este evento algo inolvidable, te sugerimos asistir con vestimenta formal de gala.</p>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="py-12 text-center relative z-10">
+        <h2 class="cursive text-4xl text-[#D4AF37] mb-2">¡No faltes!</h2>
+        <p class="text-gray-500 font-light tracking-widest text-[10px] md:text-xs uppercase">Generación 2021-2027 • Esc. Prim. Ricardo Flores Magón</p>
     </footer>
 
-    <!-- Script para animar el confeti -->
+    <!-- SCRIPTS (Animaciones y Reloj) -->
     <script>
-        const canvas = document.getElementById('confetti');
-        const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-
-        let particles = [];
-        const particleCount = 80; // Cantidad de confeti
-
-        for (let i = 0; i < particleCount; i++) {
-            particles.push({
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height - canvas.height,
-                r: Math.random() * 4 + 2,
-                dx: Math.random() * 2 - 1,
-                dy: Math.random() * 2 + 1,
-                color: ['#D4AF37', '#FFDF73', '#AA771C'][Math.floor(Math.random() * 3)]
-            });
-        }
-
-        function drawConfetti() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach(p => {
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-                ctx.fillStyle = p.color;
-                ctx.fill();
-                p.y += p.dy;
-                p.x += p.dx;
+        // --- 1. ANIMACIONES AL HACER SCROLL ---
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal, .reveal-zoom");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 100; // Cuándo aparece
                 
-                // Reiniciar en la parte superior cuando cae al fondo
-                if (p.y > canvas.height) {
-                    p.y = -10;
-                    p.x = Math.random() * canvas.width;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
                 }
-            });
-            requestAnimationFrame(drawConfetti);
+            }
         }
-        drawConfetti();
+        window.addEventListener("scroll", reveal);
+        reveal(); // Ejecutar al inicio
 
-        // Ajustar el canvas si se gira la pantalla del celular
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        });
+        // --- 2. CUENTA REGRESIVA ---
+        // Fecha meta: 9 de Julio 2027 a las 09:45 AM
+        const countDownDate = new Date("Jul 9, 2027 09:45:00").getTime();
+
+        const x = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = countDownDate - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Agregar ceros a la izquierda si es menor a 10
+            document.getElementById("days").innerHTML = days < 10 ? "0" + days : days;
+            document.getElementById("hours").innerHTML = hours < 10 ? "0" + hours : hours;
+            document.getElementById("minutes").innerHTML = minutes < 10 ? "0" + minutes : minutes;
+            document.getElementById("seconds").innerHTML = seconds < 10 ? "0" + seconds : seconds;
+
+            if (distance < 0) {
+                clearInterval(x);
+                document.getElementById("days").innerHTML = "00";
+                document.getElementById("hours").innerHTML = "00";
+                document.getElementById("minutes").innerHTML = "00";
+                document.getElementById("seconds").innerHTML = "00";
+            }
+        }, 1000);
     </script>
 </body>
 </html>
